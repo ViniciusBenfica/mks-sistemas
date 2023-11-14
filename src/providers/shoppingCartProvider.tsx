@@ -1,9 +1,8 @@
 'use client';
 
-import { useState, createContext, useContext } from 'react';
+import { useState, createContext, useContext, useEffect } from 'react';
 import { IProduct } from '../types/IProduct';
 import { ICart } from '@/types/ICart';
-
 interface ICartContextProps {
   cartItems: ICart[];
   cartOpen: boolean;
@@ -25,8 +24,16 @@ interface CartProviderProps {
 export const CartContext = createContext({} as ICartContextProps);
 
 export default function CartProvider({ children }: CartProviderProps) {
-  const [cartItems, setCartItems] = useState<ICart[]>([]);
+  const [cartItems, setCartItems] = useState<ICart[]>(() => {
+    const storedCartItems = localStorage.getItem('cartItems');
+    return storedCartItems ? JSON.parse(storedCartItems) : [];
+  });
+
   const [cartOpen, setCartOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  }, [cartItems]);
 
   const addItem = (item: IProduct): void => {
     setCartItems((oldItems) => {
