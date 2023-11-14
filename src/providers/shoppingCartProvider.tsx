@@ -2,13 +2,9 @@
 
 import { useState, createContext, useContext } from 'react';
 import { IProduct } from '../types/IProduct';
+import { ICart } from '@/types/ICart';
 
-interface ICart {
-  product: IProduct;
-  quantity: number;
-}
-
-interface ÍCartContextProps {
+interface ICartContextProps {
   cartItems: ICart[];
   cartOpen: boolean;
   setCartOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -26,7 +22,7 @@ interface CartProviderProps {
   children: React.ReactNode;
 }
 
-export const CartContext = createContext({} as ÍCartContextProps);
+export const CartContext = createContext({} as ICartContextProps);
 
 export default function CartProvider({ children }: CartProviderProps) {
   const [cartItems, setCartItems] = useState<ICart[]>([]);
