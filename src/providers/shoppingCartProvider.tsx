@@ -10,6 +10,8 @@ interface ICart {
 
 interface ÍCartContextProps {
   cartItems: ICart[];
+  cartOpen: boolean;
+  setCartOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setCartItems: React.Dispatch<React.SetStateAction<ICart[]>>;
   addItem: (item: IProduct) => void;
   incrementItem: (id: number) => void;
@@ -28,8 +30,9 @@ export const CartContext = createContext({} as ÍCartContextProps);
 
 export default function CartProvider({ children }: CartProviderProps) {
   const [cartItems, setCartItems] = useState<ICart[]>([]);
+  const [cartOpen, setCartOpen] = useState<boolean>(false);
 
-  const addItem = (item: IProduct) => {
+  const addItem = (item: IProduct): void => {
     setCartItems((oldItems) => {
       const existingItem = oldItems.find(
         (cartItem) => cartItem.product.id === item.id,
@@ -47,7 +50,7 @@ export default function CartProvider({ children }: CartProviderProps) {
     });
   };
 
-  const incrementItem = (id: number) => {
+  const incrementItem = (id: number): void => {
     setCartItems((oldItems) =>
       oldItems.map((item) =>
         item.product.id === id
@@ -57,7 +60,7 @@ export default function CartProvider({ children }: CartProviderProps) {
     );
   };
 
-  const decrementItem = (id: number) => {
+  const decrementItem = (id: number): void => {
     setCartItems((oldItems) =>
       oldItems.map((item) =>
         item.product.id === id
@@ -67,7 +70,7 @@ export default function CartProvider({ children }: CartProviderProps) {
     );
   };
 
-  const updateItemQuantity = (id: number, newQuantity: number) => {
+  const updateItemQuantity = (id: number, newQuantity: number): void => {
     setCartItems((oldItems) =>
       oldItems.map((item) =>
         item.product.id === id ? { ...item, quantity: newQuantity } : item,
@@ -75,20 +78,20 @@ export default function CartProvider({ children }: CartProviderProps) {
     );
   };
 
-  const removeItem = (id: number) => {
+  const removeItem = (id: number): void => {
     setCartItems((oldItems) =>
       oldItems.filter((item) => item.product.id !== id),
     );
   };
 
-  const getCartTotalItems = () => {
+  const getCartTotalItems = (): number => {
     return cartItems.reduce(
       (totalItens, item) => totalItens + item.quantity,
       0,
     );
   };
 
-  const getCartTotal = () => {
+  const getCartTotal = (): number => {
     return cartItems.reduce(
       (total, item) => total + +item.product.price * item.quantity,
       0,
@@ -107,6 +110,8 @@ export default function CartProvider({ children }: CartProviderProps) {
         removeItem,
         getCartTotal,
         getCartTotalItems,
+        cartOpen,
+        setCartOpen,
       }}
     >
       {children}
