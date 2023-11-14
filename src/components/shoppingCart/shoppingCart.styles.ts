@@ -115,6 +115,7 @@ export const ProductPrice = styled.div`
   font-size: 14px;
   font-weight: 700;
   line-height: 17px;
+  margin-left: 5px;
 `;
 
 export const CartHeader = styled.div`
@@ -135,7 +136,8 @@ export const ProductQuantity = styled.p`
   color: ${theme.color.black};
   font-size: 5px;
   font-weight: 400;
-  margin-top: -10px;
+  margin: 0;
+  margin-top: -6px;
 `;
 
 export const Products = styled.div`
