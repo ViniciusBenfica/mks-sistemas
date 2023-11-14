@@ -24,16 +24,8 @@ interface CartProviderProps {
 export const CartContext = createContext({} as ICartContextProps);
 
 export default function CartProvider({ children }: CartProviderProps) {
-  const [cartItems, setCartItems] = useState<ICart[]>(() => {
-    const storedCartItems = localStorage.getItem('cartItems');
-    return storedCartItems ? JSON.parse(storedCartItems) : [];
-  });
-
+  const [cartItems, setCartItems] = useState<ICart[]>([]);
   const [cartOpen, setCartOpen] = useState<boolean>(false);
-
-  useEffect(() => {
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
-  }, [cartItems]);
 
   const addItem = (item: IProduct): void => {
     setCartItems((oldItems) => {
