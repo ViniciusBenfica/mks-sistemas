@@ -2,7 +2,7 @@ import { url } from '@/utils/url';
 import { IProducts } from '@/types/IProduct';
 import Body from './sections/body/body';
 
-export async function getAllProducts(): Promise<IProducts> {
+async function getAllProducts(): Promise<IProducts> {
   try {
     const response = await fetch(
       `${url}/products?page=1&rows=8&sortBy=id&orderBy=DESC`,
