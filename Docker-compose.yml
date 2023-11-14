@@ -1,18 +1,14 @@
-version: '3.8'
+version: '3.5'
 
 services:
   web:
     build:
       context: .
-      target: dev
+      dockerfile: Dockerfile
+    container_name: mks-sistemas
+    ports:
+      - "3000:3000"
     volumes:
       - .:/app
       - /app/node_modules
-    ports:
-      - "3000:3000"
-    networks:
-      - network
-
-networks:
-  network:
-    driver: bridge
+   

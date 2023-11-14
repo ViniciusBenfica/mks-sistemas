@@ -1,13 +1,15 @@
-FROM node:alpine as dev
+FROM node:18-alpine
 
 WORKDIR /app
 
-COPY package*.json /app
+COPY package.json ./
 
-RUN yarn
+RUN npm install
 
 COPY . .
 
-EXPOSE 3000
+RUN npm run build
 
-CMD ["yarn", "dev"]
+COPY .next ./.next
+
+CMD ["npm", "run", "dev"]
